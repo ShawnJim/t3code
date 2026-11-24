@@ -1553,6 +1553,17 @@ function OpenCommandPaletteDialog(props: {
 
   if (activeThread !== null) {
     const thread = activeThread;
+    const threadRef = scopeThreadRef(thread.environmentId, thread.id);
+    actionItems.push({
+      kind: "action",
+      value: "action:open-swarm-board",
+      searchTerms: ["swarm", "board", "antigravity", "agy", "agents", "graph", "hive"],
+      title: gt("Open Swarm board"),
+      icon: <WorkflowIcon className={ITEM_ICON_CLASS} />,
+      run: async () => {
+        useRightPanelStore.getState().open(threadRef, "swarm");
+      },
+    });
     actionItems.push({
       kind: "action",
       value: "action:restart-agent-session",

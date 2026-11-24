@@ -36,6 +36,9 @@ const DiffPanel = lazy(() => import("../DiffPanel"));
 const DevicePanel = lazy(() =>
   import("../device/DevicePanel").then((module) => ({ default: module.DevicePanel })),
 );
+const SwarmPanel = lazy(() =>
+  import("../swarm/SwarmPanel").then((module) => ({ default: module.SwarmPanel })),
+);
 const FilePreviewPanel = lazy(() => import("../files/FilePreviewPanel"));
 
 type RightPanelTerminalProps = Omit<
@@ -265,6 +268,18 @@ export function RightPanelSurfaceContent(props: {
               props.onCloseSurface(surface);
               useRightPanelStore.getState().show(threadRef);
             }}
+          />
+        </Suspense>
+      );
+    case "swarm":
+      return (
+        <Suspense fallback={null}>
+          <SwarmPanel
+            key={`${props.environmentId}:${threadRef.threadId}`}
+            threadRef={threadRef}
+            visible={visible}
+            workspaceRoot={props.files.workspaceRoot}
+            onOpenFile={props.files.onOpenFile}
           />
         </Suspense>
       );
